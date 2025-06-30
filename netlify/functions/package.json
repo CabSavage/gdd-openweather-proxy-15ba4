@@ -1,1 +1,3 @@
-netlify/functions/gdd.js
+{
+  "type": "module"
+}
