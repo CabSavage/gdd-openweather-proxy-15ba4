@@ -11,6 +11,7 @@ exports.handler = async function (event) {
   const start = new Date(`${year}-01-01`);
   const end = new Date(`${year}-12-31`);
   const results = [];
+  let cumulative = 0;
 
   for (let date = new Date(start); date <= end; date.setDate(date.getDate() + 1)) {
     const dateStr = date.toISOString().slice(0, 10);
@@ -24,12 +25,14 @@ exports.handler = async function (event) {
       const tmin = data.daily.temperature_2m_min?.[0];
       const tmax = data.daily.temperature_2m_max?.[0];
       const gdd = Math.max(0, ((tmax + tmin) / 2) - tbase);
+      cumulative += gdd;
 
       results.push({
         date: dateStr,
         tmin: Number(tmin.toFixed(1)),
         tmax: Number(tmax.toFixed(1)),
         gdd: Number(gdd.toFixed(2)),
+        cumulative_gdd: Number(cumulative.toFixed(2)),
       });
     } catch (err) {
       results.push({ date: dateStr, error: "Data fetch error" });
