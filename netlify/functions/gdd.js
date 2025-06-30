@@ -1,8 +1,8 @@
 exports.handler = async function (event) {
   const { lat, lon, year, tbase = 10 } = event.queryStringParameters;
 
-  const start = new Date(`${year}-01-01`);
-  const end = new Date(`${year}-12-31`);
+  const start = new Date(`${2025}-01-01`);
+  const end = new Date(`${2025}-12-31`);
   const results = [];
 
   for (let date = new Date(start); date <= end; date.setDate(date.getDate() + 1)) {
